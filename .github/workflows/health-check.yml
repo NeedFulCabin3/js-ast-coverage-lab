@@ -1,0 +1,26 @@
+name: Repository Health Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate file presence
+        run: |
+          test -f index.html || (echo "Missing index.html" && exit 1)
+          test -f script.js || (echo "Missing script.js" && exit 1)
+          test -f style.css || (echo "Missing style.css" && exit 1)
+          echo "All structural assets present."
+
+      - name: Verify external CDN dependencies
+        run: |
+          curl -sI https://cdnjs.cloudflare.com/ajax/libs/esprima/4.0.1/esprima.min.js | head -n 1 | grep "200"
+          curl -sI https://cdnjs.cloudflare.com/ajax/libs/escodegen/2.1.0/escodegen.min.js | head -n 1 | grep "200"
