@@ -22,5 +22,5 @@ jobs:
 
       - name: Verify external CDN dependencies
         run: |
-          curl -sI https://cdnjs.cloudflare.com/ajax/libs/esprima/4.0.1/esprima.min.js | head -n 1 | grep "200"
-          curl -sI https://cdnjs.cloudflare.com/ajax/libs/escodegen/2.1.0/escodegen.min.js | head -n 1 | grep "200"
+          curl -sL -A "Mozilla/5.0" -o /dev/null -w "%{http_code}\n" https://cdnjs.cloudflare.com/ajax/libs/esprima/4.0.1/esprima.min.js | grep "200"
+          curl -sL -A "Mozilla/5.0" -o /dev/null -w "%{http_code}\n" https://cdnjs.cloudflare.com/ajax/libs/escodegen/2.1.0/escodegen.min.js | grep "200"
