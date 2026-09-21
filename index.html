@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AST Coverage Instrumenter</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/esprima/4.0.1/esprima.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/escodegen/2.1.0/escodegen.min.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1>Custom Code Coverage & AST Instrumenter</h1>
+    <p>Parse JS code, inject counters into branches & functions, execute in a sandbox, and view coverage heatmaps.</p>
+  </header>
+
+  <main class="container">
+    <section class="panel input-panel">
+      <div class="panel-header">
+        <h2>Source JS Code</h2>
+        <button id="run-btn">Instrument & Run</button>
+      </div>
+      <textarea id="code-input" placeholder="Paste your JavaScript code here...">// Example code
+function calcTotal(items, discount) {
+  let total = 0;
+  
+  if (!items || items.length === 0) {
+    return 0;
+  }
+  
+  for (let i = 0; i < items.length; i++) {
+    total += items[i];
+  }
+
+  if (discount) {
+    total = total - (total * discount);
+  } else {
+    total = total;
+  }
+
+  return total;
+}
+
+// Test calls
+calcTotal([10, 20, 30], 0.1);
+calcTotal([], 0);
+</textarea>
+    </section>
+
+    <section class="panel output-panel">
+      <div class="panel-header">
+        <h2>Stats & Output</h2>
+        <div class="badge" id="coverage-badge">Coverage: --%</div>
+      </div>
+      
+      <div class="console-box">
+        <h3>Execution Logs</h3>
+        <pre id="console-output">Output will appear here...</pre>
+      </div>
+
+      <div class="code-views">
+        <div class="tab-buttons">
+          <button class="tab-btn active" data-tab="heatmap">Coverage Heatmap</button>
+          <button class="tab-btn" data-tab="instrumented">Instrumented Code</button>
+        </div>
+
+        <div id="heatmap-view" class="tab-content active">
+          <div id="code-heatmap" class="heatmap-code">Run code to inspect branch & function coverage...</div>
+        </div>
+
+        <div id="instrumented-view" class="tab-content">
+          <pre id="instrumented-code">// Generated code with tracking statements</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
