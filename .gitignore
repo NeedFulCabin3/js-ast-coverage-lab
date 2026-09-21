@@ -1,0 +1,13 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Editor configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Crash logs & diagnostic dumps
+*.log
+npm-debug.log*
